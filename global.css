@@ -1,0 +1,31 @@
+:root {
+  /* Game Color Palette - inspired by #ffff00 (yellow) and #00ccff (cyan) */
+  --game-primary: #00ccff; /* Bright cyan - primary color */
+  --game-secondary: #ffff00; /* Bright yellow - secondary color */
+  --game-accent: #ff6600; /* Orange - accent color */
+  --game-highlight: #00ff88; /* Bright green - highlight color */
+  --game-warning: #ff0066; /* Magenta - warning/danger color */
+}
+
+body {
+  font-family: "Black Ops One", sans-serif;
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+canvas {
+  display: block !important;
+  margin: 0 auto !important;
+  box-shadow: 0 0 20px rgba(0, 204, 255, 0.3);
+  background: #000;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
