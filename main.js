@@ -2,6 +2,7 @@
 import Phaser from "phaser";
 import MainMenuScene from "./scenes/MainMenuScene.js";
 import BriefingScene from "./scenes/BriefingSceneGeneric.js";
+import Mission1Scene from "./scenes/Mission1Scene.js";
 
 const mainMenu = new MainMenuScene("MainMenu");
 
@@ -13,7 +14,14 @@ const config = {
     width: window.innerWidth,
     height: window.innerHeight,
   },
-  scene: [mainMenu, BriefingScene],
+  physics: {
+    default: "arcade",
+    arcade: {
+      gravity: { y: 0 },
+      debug: false,
+    },
+  },
+  scene: [mainMenu, BriefingScene, Mission1Scene],
 };
 
 window.onload = () => {
