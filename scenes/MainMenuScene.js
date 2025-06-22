@@ -29,6 +29,7 @@ export default class MainMenuScene extends Phaser.Scene {
     video.setDepth(-1);
     video.play(true);
     video.setMute(true);
+    video.setPlaybackRate(0.5);
 
     // Music
     const music = this.sound.add("menu_music");
@@ -40,7 +41,7 @@ export default class MainMenuScene extends Phaser.Scene {
     this.add.rectangle(
       width / 2,
       height / 2,
-      width * 0.6,
+      width * 0.85,
       height,
       0x000000,
       0.5

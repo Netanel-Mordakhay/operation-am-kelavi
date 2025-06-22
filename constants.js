@@ -42,7 +42,7 @@ Credits text
 
 /* Briefings */
 export const COMMANDER_TITLE = `
-Aluf Oz Geva-Niv
+Major General Oz Geva-Niv
 Commander of the IAF
 `;
 
