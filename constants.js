@@ -39,3 +39,20 @@ How to play text
 export const CREDITS = `
 Credits text
 `;
+
+/* Briefings */
+export const COMMANDER_TITLE = `
+Aluf Oz Geva-Niv
+Commander of the IAF
+`;
+
+/* Mission 1 Briefing */
+export const MISSION_1_BRIEFING = `
+Welcome, pilot. We've been waiting for this moment.
+
+Tonight, it's happening — this is not a drill. On the night of June 13th, 2025, we initiate *Operation Am Kelavi*: Israel's preemptive strike deep into Iranian territory. After months of escalation and undeniable threats to our civilians, we no longer have the luxury of waiting.
+
+You’ll be flying one of our stealth F-35s into hostile airspace, under cover of darkness, to intercept key threats: ballistic missile sites, armed UAV swarms, and hostile enemy aircraft. Your mission is clear — neutralize the threat before it reaches Israeli soil. The defense of our people depends on your precision, your courage, and your resolve.
+
+Godspeed, warrior. We'll see you back at base.
+`;

@@ -18,33 +18,33 @@ const gameColors = {
  * Text Styles
  */
 export const TextStyles = {
-  defaultText: {
+  defaultText: () => ({
     fontSize: "24px",
     color: gameColors.primary,
     fontFamily: "Black Ops One, sans-serif",
-  },
-  title: {
+  }),
+  title: () => ({
     fontSize: "64px",
     color: gameColors.primary,
     fontFamily: "Black Ops One, sans-serif",
-  },
-  menuItem: {
+  }),
+  menuItem: () => ({
     fontSize: "48px",
     color: gameColors.primary,
     fontFamily: "Black Ops One, sans-serif",
-  },
-  menuItemHover: {
+  }),
+  menuItemHover: () => ({
     color: gameColors.secondary,
     fontFamily: "Black Ops One, sans-serif",
-  },
-  button: {
+  }),
+  button: () => ({
     fontSize: "28px",
     color: gameColors.secondary,
     backgroundColor: gameColors.warning,
     padding: { x: 20, y: 10 },
     fontFamily: "Black Ops One, sans-serif",
-  },
-  buttonHover: {
+  }),
+  buttonHover: () => ({
     backgroundColor: gameColors.accent,
-  },
+  }),
 };

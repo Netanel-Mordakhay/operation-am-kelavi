@@ -1,20 +1,21 @@
-import { GAME_WIDTH, GAME_HEIGHT } from "./constants.js";
+// main.js
 import Phaser from "phaser";
 import MainMenuScene from "./scenes/MainMenuScene.js";
+import BriefingScene from "./scenes/BriefingSceneGeneric.js";
+
+const mainMenu = new MainMenuScene("MainMenu");
 
 const config = {
   type: Phaser.AUTO,
-  width: GAME_WIDTH,
-  height: GAME_HEIGHT,
-  backgroundColor: "#000022",
-  parent: document.body,
-  scene: [MainMenuScene],
   scale: {
     mode: Phaser.Scale.FIT,
     autoCenter: Phaser.Scale.CENTER_BOTH,
-    width: GAME_WIDTH,
-    height: GAME_HEIGHT,
+    width: window.innerWidth,
+    height: window.innerHeight,
   },
+  scene: [mainMenu, BriefingScene],
 };
 
-const game = new Phaser.Game(config);
+window.onload = () => {
+  new Phaser.Game(config);
+};
