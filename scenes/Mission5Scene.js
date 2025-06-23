@@ -13,6 +13,13 @@ const PLAYER_SIZE = { width: 100, height: 100 };
 const TARGET_SIZE = { width: 30, height: 90 };
 const BOSS_SIZE = { width: 150, height: 300 };
 
+// Utility to detect mobile devices
+function isMobileDevice() {
+  return /Mobi|Android|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i.test(
+    navigator.userAgent
+  );
+}
+
 export default class Mission5Scene extends Phaser.Scene {
   constructor() {
     super("Mission5Scene");
@@ -127,10 +134,27 @@ export default class Mission5Scene extends Phaser.Scene {
 
     // Create group for bullets
     this.bullets = this.physics.add.group();
-    // Listen for spacebar to shoot
-    this.input.keyboard.on("keydown-SPACE", () => {
-      shootBullet(this, this.player, this.bullets);
-    });
+
+    // Device check
+    this.isMobile = isMobileDevice();
+
+    // Shooting logic
+    if (this.isMobile) {
+      // Shoot automatically every 400ms (adjust as needed)
+      this.autoShootEvent = this.time.addEvent({
+        delay: 400,
+        callback: () => {
+          shootBullet(this, this.player, this.bullets);
+        },
+        callbackScope: this,
+        loop: true,
+      });
+    } else {
+      // Desktop: shoot on SPACE
+      this.input.keyboard.on("keydown-SPACE", () => {
+        shootBullet(this, this.player, this.bullets);
+      });
+    }
 
     // Create group for enemy targets (missiles and F4s)
     this.targets = this.physics.add.group();

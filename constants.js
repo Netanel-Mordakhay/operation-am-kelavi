@@ -39,7 +39,7 @@ SPACE   Fire missiles
 
 MOBILE CONTROLS:
 Swipe left/right to move, Swipe up/down to move
-Double tap to shoot
+Shoots automatically
 
 ENEMIES:
 - Ballistic Missiles: Dodge or shoot them down.

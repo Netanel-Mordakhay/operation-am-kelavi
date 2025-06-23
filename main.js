@@ -25,18 +25,18 @@ const config = {
       debug: false,
     },
   },
-
-  scene: [
-    mainMenu,
-    BriefingScene,
-    Mission1Scene,
-    Mission2Scene,
-    Mission3Scene,
-    Mission4Scene,
-    Mission5Scene,
-  ],
   /*
   scene: [
+    mainMenu,
+    BriefingScene,
+    Mission1Scene,
+    Mission2Scene,
+    Mission3Scene,
+    Mission4Scene,
+    Mission5Scene,
+  ],
+  */
+  scene: [
     Mission5Scene,
     Mission4Scene,
     Mission3Scene,
@@ -45,7 +45,6 @@ const config = {
     BriefingScene,
     mainMenu,
   ],
-  */
 };
 
 window.onload = () => {

@@ -82,28 +82,31 @@ export function handlePlayerMovement(
   let turning = false;
 
   // Different speeds for keyboard vs touch
-  const keyboardSpeedX = 7;
-  const keyboardSpeedY = 5;
+  const keyboardSpeedX = 700;
+  const keyboardSpeedY = 500;
+
+  const keyboardMoveX = (keyboardSpeedX * delta) / 1000;
+  const keyboardMoveY = (keyboardSpeedY * delta) / 1000;
+
   const touchSpeedX = 700;
   const touchSpeedY = 300;
   const touchMoveX = (touchSpeedX * delta) / 1000;
   const touchMoveY = (touchSpeedY * delta) / 1000;
 
-  // Handle keyboard controls
   if (cursors.left.isDown && player.x > movementBounds.left) {
-    player.x -= keyboardSpeedX;
+    player.x -= keyboardMoveX;
     player.setAngle(Phaser.Math.Linear(player.angle, -15, 0.2));
     turning = true;
   } else if (cursors.right.isDown && player.x < movementBounds.right) {
-    player.x += keyboardSpeedX;
+    player.x += keyboardMoveX;
     player.setAngle(Phaser.Math.Linear(player.angle, 15, 0.2));
     turning = true;
   }
 
   if (cursors.up.isDown && player.y > movementBounds.top) {
-    player.y -= keyboardSpeedY;
+    player.y -= keyboardMoveY;
   } else if (cursors.down.isDown && player.y < movementBounds.bottom) {
-    player.y += keyboardSpeedY;
+    player.y += keyboardMoveY;
   }
 
   // Handle touch/swipe controls
@@ -121,27 +124,29 @@ export function handlePlayerMovement(
         const dragX = pointer.x - pointer.dragStartX;
         const dragY = pointer.y - pointer.dragStartY;
 
+        const threshold = 10;
+
         // Move horizontally based on swipe
-        if (dragX < 0 && player.x > movementBounds.left) {
-          player.x -= touchMoveX;
-          player.setAngle(Phaser.Math.Linear(player.angle, -15, 0.2));
-          turning = true;
-        } else if (dragX > 0 && player.x < movementBounds.right) {
-          player.x += touchMoveX;
-          player.setAngle(Phaser.Math.Linear(player.angle, 15, 0.2));
-          turning = true;
+        if (Math.abs(dragX) > threshold) {
+          if (dragX < 0 && player.x > movementBounds.left) {
+            player.x -= touchMoveX;
+            player.setAngle(Phaser.Math.Linear(player.angle, -15, 0.2));
+          } else if (dragX > 0 && player.x < movementBounds.right) {
+            player.x += touchMoveX;
+            player.setAngle(Phaser.Math.Linear(player.angle, 15, 0.2));
+          }
+          pointer.dragStartX = pointer.x;
         }
 
         // Move vertically based on swipe
-        if (dragY < 0 && player.y > movementBounds.top) {
-          player.y -= touchMoveY;
-        } else if (dragY > 0 && player.y < movementBounds.bottom) {
-          player.y += touchMoveY;
+        if (Math.abs(dragY) > threshold) {
+          if (dragY < 0 && player.y > movementBounds.top) {
+            player.y -= touchMoveY;
+          } else if (dragY > 0 && player.y < movementBounds.bottom) {
+            player.y += touchMoveY;
+          }
+          pointer.dragStartY = pointer.y;
         }
-
-        // Update drag start position
-        pointer.dragStartX = pointer.x;
-        pointer.dragStartY = pointer.y;
       }
     });
 
