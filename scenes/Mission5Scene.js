@@ -20,7 +20,9 @@ export default class Mission5Scene extends Phaser.Scene {
     this.canShoot = true;
     this.missleSpawnTime = 1000;
     // Boss lives
-    this.bossLives = 10;
+    this.bossLives = 1;
+    // Boss missile cooldown
+    this.bossMissileCooldown = 0;
     // Timer variables (not used in this mission)
     this.timeLeft = 90;
     this.timerEvent = null;
@@ -35,6 +37,7 @@ export default class Mission5Scene extends Phaser.Scene {
     this.load.image("target", "assets/sprites/missile.webp");
     this.load.image("f4", "assets/sprites/f4.webp");
     this.load.image("boss", "assets/sprites/boss.webp");
+    this.load.image("boss_missile", "assets/sprites/bossmissile.webp");
     this.load.image(
       "desroyed_explosion",
       "assets/sprites/destroyed_explosion.webp"
@@ -100,6 +103,10 @@ export default class Mission5Scene extends Phaser.Scene {
     // Spawn boss immediately at a random y in the top 20% of the screen
     this.bossSpawned = false;
     this.spawnBoss();
+    // Set initial boss target x for smooth movement
+    if (this.boss) {
+      this.bossTargetX = this.boss.x;
+    }
 
     // Spawn missiles at regular intervals (missiles and F4 only)
     this.time.addEvent({
@@ -153,9 +160,24 @@ export default class Mission5Scene extends Phaser.Scene {
 
     // Set up keyboard controls
     this.cursors = this.input.keyboard.createCursorKeys();
+
+    // Create group for boss missiles
+    this.bossMissiles = this.physics.add.group();
+
+    // Add collision between boss missiles and player
+    this.physics.add.overlap(
+      this.player,
+      this.bossMissiles,
+      (player, missile) => {
+        missile.destroy();
+        handlePlayerHit(this, player, missile);
+      },
+      null,
+      this
+    );
   }
 
-  update() {
+  update(time, delta) {
     // Scroll the background to create movement effect
     this.bg1.tilePositionY -= 2;
     this.bg2.tilePositionY -= 2;
@@ -165,28 +187,52 @@ export default class Mission5Scene extends Phaser.Scene {
 
     // Remove targets that have moved off the bottom of the screen
     this.targets.children.each((target) => {
-      if (target.y > this.scale.height + 50) {
-        if (target.texture.key === "boss") {
-          this.lives = 0;
-          this.livesText.setText("Lives: " + this.lives);
-        }
+      if (target.y > this.scale.height + 50 && target.texture.key !== "boss") {
         target.destroy();
       }
     });
 
-    // Move boss randomly on the x axis, keep y fixed in top 20%
+    // Move boss smoothly on the x axis toward a target x
     if (this.boss) {
-      // Randomly move left or right
-      const moveAmount = Phaser.Math.Between(-2, 2);
-      this.boss.x += moveAmount;
+      // If close to target x, pick a new random target x
+      if (Math.abs(this.boss.x - this.bossTargetX) < 5) {
+        const minX = this.boss.displayWidth / 2;
+        const maxX = this.scale.width - this.boss.displayWidth / 2;
+        this.bossTargetX = Phaser.Math.Between(minX, maxX);
+      }
+      // Lerp boss.x toward bossTargetX
+      this.boss.x = Phaser.Math.Linear(this.boss.x, this.bossTargetX, 0.02);
       // Clamp x within screen
       this.boss.x = Phaser.Math.Clamp(
         this.boss.x,
         this.boss.displayWidth / 2,
         this.scale.width - this.boss.displayWidth / 2
       );
-      // Keep y fixed (no need to set y here, as it doesn't change after spawn)
+      // Boss fires missile if aligned with player and cooldown is over
+      if (
+        Math.abs(this.boss.x - this.player.x) < 10 &&
+        this.bossMissileCooldown <= 0
+      ) {
+        this.fireBossMissile();
+        this.bossMissileCooldown = 1200; // ms cooldown
+      }
     }
+
+    // Decrease boss missile cooldown
+    if (this.bossMissileCooldown > 0) {
+      this.bossMissileCooldown -= delta;
+    }
+
+    // Move boss missiles downward
+    this.bossMissiles.children.each((missile) => {
+      if (missile.active) {
+        missile.y += 2;
+        // Destroy if off screen
+        if (missile.y > this.scale.height + 50) {
+          missile.destroy();
+        }
+      }
+    });
 
     // End mission if boss is defeated
     // (Handled in hitTarget)
@@ -283,8 +329,9 @@ export default class Mission5Scene extends Phaser.Scene {
         onComplete: () => explosion.destroy(),
       });
 
-      if (this.bossLives <= 0) {
-        target.destroy(); // Only destroy boss after 10th hit
+      if (this.bossLives <= 0 && !this.gameEnded) {
+        target.destroy(); // Only destroy boss after last hit
+        this.boss = null; // Prevent further references
         this.mission5bgm.stop();
         this.gameEnded = true;
         showEndScreen(
@@ -318,5 +365,17 @@ export default class Mission5Scene extends Phaser.Scene {
       ease: "Linear",
       onComplete: () => explosion.destroy(),
     });
+  }
+
+  // Boss fires a missile downward
+  fireBossMissile() {
+    const missile = this.bossMissiles.create(
+      this.boss.x,
+      this.boss.y + this.boss.displayHeight / 2,
+      "boss_missile"
+    );
+    missile.setDisplaySize(30, 90);
+    missile.setVelocityY(400);
+    missile.setCollideWorldBounds(false);
   }
 }

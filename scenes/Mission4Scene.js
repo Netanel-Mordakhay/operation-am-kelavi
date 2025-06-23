@@ -28,7 +28,7 @@ export default class Mission4Scene extends Phaser.Scene {
   preload() {
     // Load all assets: images and sounds
     this.load.image("mission4bg", "assets/sprites/mission4bg.webp");
-    this.load.image("plane", "assets/sprites/b2.webp");
+    this.load.image("b2plane", "assets/sprites/b2.webp");
     this.load.image("bullet", "assets/sprites/f35missile.webp");
     this.load.image("target", "assets/sprites/missile.webp");
     this.load.image("f4", "assets/sprites/f4.webp");
@@ -74,7 +74,7 @@ export default class Mission4Scene extends Phaser.Scene {
     this.pilotVideo = createPilotVideo(this);
 
     // Create player sprite and set its properties
-    this.player = this.physics.add.sprite(width / 2, height * 0.8, "plane");
+    this.player = this.physics.add.sprite(width / 2, height * 0.8, "b2plane");
     this.player.setDisplaySize(PLAYER_SIZE.width, PLAYER_SIZE.height);
     this.player.setCollideWorldBounds(true);
 
