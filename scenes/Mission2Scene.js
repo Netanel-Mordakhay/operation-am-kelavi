@@ -54,13 +54,37 @@ export default class Mission2Scene extends Phaser.Scene {
 
     const { width, height } = this.scale;
 
-    // Create scrolling background
+    // Get the original size of the background image
+    const bgTexture = this.textures.get("mission2bg").getSourceImage();
+    const bgOriginalWidth = bgTexture.width;
+    const bgOriginalHeight = bgTexture.height;
+    // Calculate scale to cover the screen (cover strategy)
+    const scaleX = width / bgOriginalWidth;
+    const scaleY = height / bgOriginalHeight;
+    const scale = Math.max(scaleX, scaleY);
+
+    // Create scrolling background, scaled to cover the screen
     this.bg1 = this.add
-      .tileSprite(width / 2, height / 2, width, height, "mission2bg")
-      .setOrigin(0.5);
+      .tileSprite(
+        width / 2,
+        height / 2,
+        bgOriginalWidth,
+        bgOriginalHeight,
+        "mission2bg"
+      )
+      .setOrigin(0.5)
+      .setScale(scale);
+
     this.bg2 = this.add
-      .tileSprite(0, -height, width, height, "mission2bg")
-      .setOrigin(0.5);
+      .tileSprite(
+        width / 2,
+        -height / 2,
+        bgOriginalWidth,
+        bgOriginalHeight,
+        "mission2bg"
+      )
+      .setOrigin(0.5)
+      .setScale(scale);
 
     // Create pilot video
     this.pilotVideo = createPilotVideo(this);
