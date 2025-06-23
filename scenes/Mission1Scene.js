@@ -39,6 +39,11 @@ export default class Mission1Scene extends Phaser.Scene {
   }
 
   create() {
+    // Reset all per-playthrough state
+    this.score = 0;
+    this.lives = 3;
+    this.gameEnded = false;
+
     // Add and configure background music and sound effects
     this.mission1bgm = this.sound
       .add("mission1bgm")
@@ -140,10 +145,6 @@ export default class Mission1Scene extends Phaser.Scene {
       null,
       this
     );
-
-    // Initialize lives and score
-    this.lives = 3;
-    this.score = 0;
 
     // Display score and lives on screen
     this.scoreText = this.add.text(

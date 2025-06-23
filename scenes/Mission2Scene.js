@@ -43,6 +43,11 @@ export default class Mission2Scene extends Phaser.Scene {
   }
 
   create() {
+    // Reset all per-playthrough state
+    this.score = 0;
+    this.lives = 3;
+    this.gameEnded = false;
+
     // Add and configure background music and sound effects
     this.mission2bgm = this.sound
       .add("mission2bgm")
@@ -149,15 +154,11 @@ export default class Mission2Scene extends Phaser.Scene {
       this
     );
 
-    // Initialize lives and score
-    this.lives = 3;
-    this.score = 0;
-
     // Display score and lives on screen
     this.scoreText = this.add.text(
       170,
       20,
-      "Targets Hit: 0 / 20",
+      "Targets Hit: 0 / 1",
       TextStyles.defaultText()
     );
     this.livesText = this.add.text(

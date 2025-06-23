@@ -50,6 +50,16 @@ export default class Mission5Scene extends Phaser.Scene {
   }
 
   create() {
+    // Reset all per-playthrough state
+    this.score = 0;
+    this.lives = 3;
+    this.gameEnded = false;
+    this.bossLives = 1; // or 10, depending on your design
+    this.bossSpawned = false;
+    this.bossDefeated = false;
+    this.bossMissileCooldown = 0;
+    this.boss = null;
+
     // Add and configure background music and sound effects
     this.mission5bgm = this.sound
       .add("mission5bgm")
@@ -126,7 +136,6 @@ export default class Mission5Scene extends Phaser.Scene {
     this.targets = this.physics.add.group();
 
     // Spawn boss immediately at a random y in the top 20% of the screen
-    this.bossSpawned = false;
     this.spawnBoss();
     // Set initial boss target x for smooth movement
     if (this.boss) {
@@ -164,9 +173,6 @@ export default class Mission5Scene extends Phaser.Scene {
       null,
       this
     );
-
-    // Initialize lives
-    this.lives = 3;
 
     // Display boss lives on screen
     this.scoreText = this.add.text(
