@@ -113,7 +113,7 @@ export default class MainMenuScene extends Phaser.Scene {
         window.open("https://www.linkedin.com/in/netanel-mordakhay/", "_blank");
       });
 
-    // --- יצירת מסכה
+    // Glow mask
     const maskWidth = 100;
     const maskHeight = creditText.height + 10;
 
@@ -121,7 +121,7 @@ export default class MainMenuScene extends Phaser.Scene {
     maskGfx.fillStyle(0xffffff);
     maskGfx.fillRect(0, 0, maskWidth, maskHeight);
 
-    // צור טקסט כפול (זוהר) ושם עליו את המסכה
+    // Glow text
     const glowText = this.add
       .text(creditText.x, creditText.y, creditText.text, {
         ...TextStyles.defaultText(),
@@ -132,7 +132,7 @@ export default class MainMenuScene extends Phaser.Scene {
     const mask = maskGfx.createGeometryMask();
     glowText.setMask(mask);
 
-    // הנפשה של המסכה (תנועת אור)
+    // Glow effect
     maskGfx.x = -maskWidth;
     maskGfx.y = creditText.y - maskHeight / 2;
 
