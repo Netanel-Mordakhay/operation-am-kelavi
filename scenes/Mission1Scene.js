@@ -1,3 +1,5 @@
+import { TextStyles } from "../config.js";
+
 const PLAYER_SIZE = { width: 100, height: 100 };
 const BULLET_SIZE = { width: 10, height: 30 };
 const TARGET_SIZE = { width: 30, height: 90 };
@@ -155,13 +157,15 @@ export default class Mission1Scene extends Phaser.Scene {
     });
 
     // Win condition
-    if (this.score >= 50) {
-      this.scene.start("MissionCompleteScene");
+    if (this.score >= 50 && !this.gameEnded) {
+      this.gameEnded = true;
+      this.showEndScreen(true);
     }
 
     // Lose condition
-    if (this.lives <= 0) {
-      this.scene.start("GameOverScene"); // make sure you have this scene
+    if (this.lives <= 0 && !this.gameEnded) {
+      this.gameEnded = true;
+      this.showEndScreen(false);
     }
   }
 
@@ -237,5 +241,73 @@ export default class Mission1Scene extends Phaser.Scene {
     this.lives -= 1;
     this.livesText.setText(`Lives: ${this.lives}`);
     this.f35explosionSound.play();
+
+    // explosion sprite
+    const explosion = this.add.image(player.x, player.y, "desroyed_explosion");
+    explosion.setDepth(10);
+    explosion.setAlpha(1);
+    explosion.setScale(0.3);
+
+    this.tweens.add({
+      targets: explosion,
+      alpha: 0,
+      scale: 0,
+      duration: 500,
+      ease: "Linear",
+      onComplete: () => {
+        explosion.destroy();
+      },
+    });
+
+    // return player to original position
+    this.player.setPosition(this.scale.width / 2, this.scale.height * 0.8);
+  }
+
+  showEndScreen(isWin) {
+    const { width, height } = this.scale;
+
+    // pause game
+    this.physics.pause();
+    this.mission1bgm.stop();
+
+    // black background
+    this.add
+      .rectangle(width / 2, height / 2, width, height, 0x000000, 0.8)
+      .setDepth(100);
+
+    // title text
+    this.add
+      .text(
+        width / 2,
+        height * 0.3,
+        isWin ? "Mission Successful" : "Mission Failed",
+        TextStyles.title()
+      )
+      .setOrigin(0.5)
+      .setDepth(101);
+
+    // button
+    const buttonText = isWin ? "Next Mission" : "Try Again";
+    const button = this.add
+      .text(width / 2, height * 0.6, buttonText, TextStyles.button())
+      .setOrigin(0.5)
+      .setInteractive({ useHandCursor: true })
+      .setDepth(101);
+
+    button.on("pointerover", () => {
+      button.setStyle({ fill: "#ffff88", backgroundColor: "#666" });
+    });
+
+    button.on("pointerout", () => {
+      button.setStyle({ fill: "#ffffff", backgroundColor: "#444" });
+    });
+
+    button.on("pointerdown", () => {
+      if (isWin) {
+        this.scene.start("Mission2Scene"); //
+      } else {
+        this.scene.start("Mission1Scene"); // return to main menu
+      }
+    });
   }
 }
