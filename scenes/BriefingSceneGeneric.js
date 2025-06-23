@@ -8,6 +8,7 @@ export default class BriefingScene extends Phaser.Scene {
   }
 
   init(data) {
+    this.missionTitle = data.missionTitle;
     this.briefText = data.briefText;
     this.audioKey = data.audioKey;
     this.videoKey = data.videoKey;
@@ -45,7 +46,7 @@ export default class BriefingScene extends Phaser.Scene {
 
     // Mission Title
     this.add
-      .text(width / 2, height * 0.1, "Mission 1", TextStyles.title())
+      .text(width / 2, height * 0.1, this.missionTitle, TextStyles.title())
       .setOrigin(0.5)
       .setWordWrapWidth(width * 0.8)
       .setDepth(2);

@@ -81,6 +81,7 @@ export default class MainMenuScene extends Phaser.Scene {
         if (label === "Start Game") {
           music.stop();
           this.scene.start("BriefingScene", {
+            missionTitle: "Mission 1",
             briefText: MISSION_1_BRIEFING,
             audioKey: "mission1_brief",
             //videoKey: "brief_commander",
