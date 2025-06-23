@@ -1,4 +1,4 @@
-export function typewriteText(scene, x, y, fullText, style, delay = 50) {
+export function typewriteText(scene, x, y, fullText, style, delay = 0.5) {
   const text = scene.add
     .text(x, y, "", style)
     .setOrigin(0.5)

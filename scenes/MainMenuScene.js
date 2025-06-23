@@ -15,8 +15,8 @@ export default class MainMenuScene extends Phaser.Scene {
   }
 
   preload() {
-    this.load.video("background", "assets/menu/bg_video.mp4");
-    this.load.audio("menu_music", "assets/menu/bg_music.mp3");
+    this.load.video("background", "assets/video/menu_bg.mp4");
+    this.load.audio("menu_music", "assets/sounds/menu_music.mp3");
     this.load.image("logo", "assets/logo_am_kelavi.png");
   }
 
@@ -83,7 +83,7 @@ export default class MainMenuScene extends Phaser.Scene {
           this.scene.start("BriefingScene", {
             briefText: MISSION_1_BRIEFING,
             audioKey: "mission1_brief",
-            videoKey: "brief_commander",
+            //videoKey: "brief_commander",
             nextScene: "Mission1Scene",
             commanderTitle: COMMANDER_TITLE,
           });

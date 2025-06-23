@@ -16,13 +16,12 @@ export default class BriefingScene extends Phaser.Scene {
   }
 
   preload() {
-    this.load.image("background", "assets/briefing/background.png");
+    this.load.image("background", "assets/sprites/brief_bg.png");
 
     if (this.audioKey)
-      this.load.audio(this.audioKey, `assets/briefing/${this.audioKey}.mp3`);
+      this.load.audio(this.audioKey, `assets/sounds/${this.audioKey}.mp3`);
 
-    if (this.videoKey)
-      this.load.video(this.videoKey, `assets/briefing/${this.videoKey}.mp4`);
+    this.load.video("brief_commander", `assets/video/brief_commander.mp4`);
   }
 
   create() {
@@ -62,7 +61,7 @@ export default class BriefingScene extends Phaser.Scene {
     );
 
     // Commander Video
-    const video = this.add.video(width * 0.2, height * 0.8, this.videoKey);
+    const video = this.add.video(width * 0.2, height * 0.8, "brief_commander");
     video.setDisplaySize(60, 60);
     video.setDepth(1);
     //video.setPlaybackRate(1.2);

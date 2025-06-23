@@ -10,6 +10,7 @@ export default class Mission1Scene extends Phaser.Scene {
   }
 
   preload() {
+    // sprites
     this.load.image("mission1bg", "assets/sprites/mission1bg.webp");
     this.load.image("plane", "assets/sprites/f35.webp");
     this.load.image("bullet", "assets/sprites/f35missile.webp");
@@ -19,9 +20,11 @@ export default class Mission1Scene extends Phaser.Scene {
       "desroyed_explosion",
       "assets/sprites/destroyed_explosion.webp"
     );
-    this.load.audio("mission1bgm", "assets/sounds/mission1bgm.mp3");
-    this.load.audio("explosion", "assets/sounds/explosion1.mp3");
-    this.load.audio("f35explosion", "assets/sounds/f35explosion.mp3");
+
+    // sounds
+    this.load.audio("mission1bgm", "assets/sounds/mission1_bgm.mp3");
+    this.load.audio("explosion", "assets/sounds/effects/explosion1.mp3");
+    this.load.audio("f35explosion", "assets/sounds/effects/f35explosion.mp3");
   }
 
   create() {
