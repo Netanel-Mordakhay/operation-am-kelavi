@@ -221,7 +221,7 @@ export default class Mission2Scene extends Phaser.Scene {
 
     const building = this.targets.create(x, -50, texture);
     building.setDisplaySize(BUILDING_SIZE.width, BUILDING_SIZE.height);
-    building.setVelocityY(300);
+    building.setVelocityY(200);
   }
 
   // Handles when a bullet hits a building

@@ -19,7 +19,7 @@ export default class Mission3Scene extends Phaser.Scene {
     this.canShoot = true;
     this.missleSpawnTime = 1000;
     // Timer variables
-    this.timeLeft = 90; // seconds
+    this.timeLeft = 120; // seconds
     this.timerEvent = null;
     this.timerText = null;
   }
@@ -251,18 +251,18 @@ export default class Mission3Scene extends Phaser.Scene {
     const rand = Phaser.Math.Between(0, 10);
     let texture, height, width, speed;
 
-    if (rand <= 6) {
+    if (rand <= 4) {
       // Most common: missile
       texture = "target";
       height = TARGET_SIZE.height;
       width = TARGET_SIZE.width;
-      speed = 180;
+      speed = 200;
     } else if (rand <= 8) {
       // Less common: F4 plane
       texture = "f4";
       height = 60;
       width = 60;
-      speed = 120;
+      speed = 160;
     } else {
       // Least common: enemyTruck
       texture = "enemyTruck";
