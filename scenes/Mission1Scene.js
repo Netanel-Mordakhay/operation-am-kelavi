@@ -1,5 +1,5 @@
 const PLAYER_SIZE = { width: 100, height: 100 };
-const BULLET_SIZE = { width: 12, height: 24 };
+const BULLET_SIZE = { width: 10, height: 30 };
 const TARGET_SIZE = { width: 30, height: 90 };
 
 export default class Mission1Scene extends Phaser.Scene {
@@ -12,7 +12,7 @@ export default class Mission1Scene extends Phaser.Scene {
   preload() {
     this.load.image("mission1bg", "assets/sprites/mission1bg.webp");
     this.load.image("plane", "assets/sprites/f35.webp");
-    this.load.image("bullet", "assets/sprites/f35.webp");
+    this.load.image("bullet", "assets/sprites/f35missile.webp");
     this.load.image("target", "assets/sprites/missile.webp");
     this.load.audio("mission1bgm", "assets/sounds/mission1bgm.mp3");
     this.load.audio("explosion", "assets/sounds/explosion1.mp3");
@@ -91,7 +91,7 @@ export default class Mission1Scene extends Phaser.Scene {
     this.lives = 3;
     this.score = 0;
 
-    this.scoreText = this.add.text(20, 20, "Targets Hit: 0 / 10", {
+    this.scoreText = this.add.text(20, 20, "Targets Hit: 0 / 50", {
       fontSize: "20px",
       fill: "#fff",
     });
@@ -110,21 +110,21 @@ export default class Mission1Scene extends Phaser.Scene {
 
     // Player movement
     if (this.cursors.left.isDown && this.player.x > this.movementBounds.left) {
-      this.player.x -= 4;
+      this.player.x -= 7;
     } else if (
       this.cursors.right.isDown &&
       this.player.x < this.movementBounds.right
     ) {
-      this.player.x += 4;
+      this.player.x += 7;
     }
 
     if (this.cursors.up.isDown && this.player.y > this.movementBounds.top) {
-      this.player.y -= 3;
+      this.player.y -= 5;
     } else if (
       this.cursors.down.isDown &&
       this.player.y < this.movementBounds.bottom
     ) {
-      this.player.y += 3;
+      this.player.y += 5;
     }
 
     // Remove missiles that went out of bounds
@@ -135,7 +135,7 @@ export default class Mission1Scene extends Phaser.Scene {
     });
 
     // Win condition
-    if (this.score >= 10) {
+    if (this.score >= 50) {
       this.scene.start("MissionCompleteScene");
     }
 
@@ -179,7 +179,7 @@ export default class Mission1Scene extends Phaser.Scene {
     bullet.destroy();
     target.destroy();
     this.score += 1;
-    this.scoreText.setText(`Targets Hit: ${this.score} / 10`);
+    this.scoreText.setText(`Targets Hit: ${this.score} / 50`);
     this.explosionSound.play();
   }
 

@@ -25,7 +25,7 @@ Godspeed, warrior. We'll see you back at base.
 export const ABOUT = `
 Following the brutal massacre of October 7th, 2023, Israel found itself thrust into a new and uncertain era. What began with a devastating terror attack on our southern communities quickly escalated into a broader regional threat — with Iran openly backing and arming hostile forces across multiple fronts.
 
-As tensions intensified, and with Israeli civilians living under constant threat of rockets, drones, and long-range missiles, the necessity for a decisive and preemptive operation became clear. Thus, Operation Am Kelavi was born — a fictional depiction of what such a mission could look like, through the eyes of a lone IAF F-35 pilot.
+As tensions intensified, and with Israeli civilians living under constant threat of rockets, drones, and long-range missiles, the necessity for a decisive and preemptive operation became clear.
 
 This game is dedicated to the brave men and women of the Israeli Defense Forces — to the pilots in the skies, the soldiers on the ground, the intelligence officers in the shadows, and the families who stand behind them.
 

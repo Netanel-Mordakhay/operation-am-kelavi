@@ -65,7 +65,7 @@ export default class BriefingScene extends Phaser.Scene {
     const video = this.add.video(width * 0.2, height * 0.8, this.videoKey);
     video.setDisplaySize(60, 60);
     video.setDepth(1);
-    video.setPlaybackRate(0.8);
+    //video.setPlaybackRate(1.2);
     video.play(true);
     video.setMute(true);
 
