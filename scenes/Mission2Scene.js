@@ -78,7 +78,7 @@ export default class Mission2Scene extends Phaser.Scene {
     this.bg2 = this.add
       .tileSprite(
         width / 2,
-        -height / 2,
+        this.bg1.y - this.bg1.displayHeight,
         bgOriginalWidth,
         bgOriginalHeight,
         "mission2bg"
@@ -172,9 +172,22 @@ export default class Mission2Scene extends Phaser.Scene {
   }
 
   update(time, delta) {
-    // Scroll the background to create movement effect
+    // Scroll the backgrounds
     this.bg1.tilePositionY -= 2;
     this.bg2.tilePositionY -= 2;
+
+    // Calculate the scaled height of the background
+    const scaledBgHeight = this.bg1.displayHeight;
+
+    // If bg1 moves off the bottom, move it above bg2
+    if (this.bg1.y - scaledBgHeight / 2 > this.scale.height) {
+      this.bg1.y = this.bg2.y - scaledBgHeight;
+    }
+
+    // If bg2 moves off the bottom, move it above bg1
+    if (this.bg2.y - scaledBgHeight / 2 > this.scale.height) {
+      this.bg2.y = this.bg1.y - scaledBgHeight;
+    }
 
     // Handle player movement (delegated to utility)
     handlePlayerMovement(
