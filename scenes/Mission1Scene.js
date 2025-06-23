@@ -14,6 +14,11 @@ export default class Mission1Scene extends Phaser.Scene {
     this.load.image("plane", "assets/sprites/f35.webp");
     this.load.image("bullet", "assets/sprites/f35missile.webp");
     this.load.image("target", "assets/sprites/missile.webp");
+    this.load.image("f4", "assets/sprites/f4.webp");
+    this.load.image(
+      "desroyed_explosion",
+      "assets/sprites/destroyed_explosion.webp"
+    );
     this.load.audio("mission1bgm", "assets/sounds/mission1bgm.mp3");
     this.load.audio("explosion", "assets/sounds/explosion1.mp3");
     this.load.audio("f35explosion", "assets/sounds/f35explosion.mp3");
@@ -49,7 +54,7 @@ export default class Mission1Scene extends Phaser.Scene {
     this.player.setCollideWorldBounds(true);
 
     this.movementBounds = {
-      top: height * 0.7,
+      top: height * 0.6,
       bottom: height,
       left: 0,
       right: width,
@@ -109,15 +114,27 @@ export default class Mission1Scene extends Phaser.Scene {
     this.bg2.tilePositionY -= 0.3;
 
     // Player movement
+    let turning = false;
+
     if (this.cursors.left.isDown && this.player.x > this.movementBounds.left) {
       this.player.x -= 7;
+      this.player.setAngle(Phaser.Math.Linear(this.player.angle, -15, 0.2));
+      turning = true;
     } else if (
       this.cursors.right.isDown &&
       this.player.x < this.movementBounds.right
     ) {
       this.player.x += 7;
+      this.player.setAngle(Phaser.Math.Linear(this.player.angle, 15, 0.2));
+      turning = true;
     }
 
+    // if not turning, return to 0
+    if (!turning) {
+      this.player.setAngle(Phaser.Math.Linear(this.player.angle, 0, 0.1));
+    }
+
+    // Y axis
     if (this.cursors.up.isDown && this.player.y > this.movementBounds.top) {
       this.player.y -= 5;
     } else if (
@@ -165,22 +182,51 @@ export default class Mission1Scene extends Phaser.Scene {
 
   spawnMissile() {
     const x = Phaser.Math.Between(30, this.scale.width - 30);
-    const missile = this.targets.create(x, -50, "target");
-    missile.setDisplaySize(TARGET_SIZE.width, TARGET_SIZE.height);
-    missile.setVelocityY(220); // speed of falling missile
+
+    const isF4 = Phaser.Math.Between(0, 10) <= 7; // 70% chance for F4
+
+    const texture = isF4 ? "f4" : "target";
+    const height = isF4 ? 60 : TARGET_SIZE.height;
+    const width = isF4 ? 60 : TARGET_SIZE.width;
+    const speed = isF4 ? 180 : 260;
+
+    const enemy = this.targets.create(x, -50, texture);
+    enemy.setDisplaySize(width, height);
+    enemy.setVelocityY(speed);
+
     // X axis movement
-    missile.initialX = x;
-    missile.oscillationSpeed = Phaser.Math.FloatBetween(2, 4);
-    missile.oscillationAmplitude = Phaser.Math.Between(10, 30);
-    missile.oscillationPhase = Math.random() * Math.PI * 2;
+    enemy.initialX = x;
+    enemy.oscillationSpeed = Phaser.Math.FloatBetween(2, 4);
+    enemy.oscillationAmplitude = Phaser.Math.Between(10, 30);
+    enemy.oscillationPhase = Math.random() * Math.PI * 2;
   }
 
   hitTarget(bullet, target) {
     bullet.destroy();
     target.destroy();
-    this.score += 1;
+    // F4 gives 2 points, other missiles give 1 point
+    const scoreToAdd = target.texture.key === "target" ? 2 : 1;
+    this.score += scoreToAdd;
     this.scoreText.setText(`Targets Hit: ${this.score} / 50`);
     this.explosionSound.play();
+
+    // explosion sprite
+    const explosion = this.add.image(target.x, target.y, "desroyed_explosion");
+    explosion.setDepth(10);
+    explosion.setAlpha(1);
+    explosion.setScale(0.2);
+
+    // Fade out explosion
+    this.tweens.add({
+      targets: explosion,
+      alpha: 0,
+      scale: 0,
+      duration: 350,
+      ease: "Linear",
+      onComplete: () => {
+        explosion.destroy();
+      },
+    });
   }
 
   playerHit(player, target) {

@@ -98,6 +98,51 @@ export default class MainMenuScene extends Phaser.Scene {
         }
       });
     });
+
+    // Credit text
+    const creditText = this.add
+      .text(
+        width / 2,
+        height * 0.95,
+        "Game by Netanel Mordakhay © 2025",
+        TextStyles.defaultText()
+      )
+      .setOrigin(0.5)
+      .setInteractive({ useHandCursor: true })
+      .on("pointerdown", () => {
+        window.open("https://www.linkedin.com/in/netanel-mordakhay/", "_blank");
+      });
+
+    // --- יצירת מסכה
+    const maskWidth = 100;
+    const maskHeight = creditText.height + 10;
+
+    const maskGfx = this.make.graphics({}, false);
+    maskGfx.fillStyle(0xffffff);
+    maskGfx.fillRect(0, 0, maskWidth, maskHeight);
+
+    // צור טקסט כפול (זוהר) ושם עליו את המסכה
+    const glowText = this.add
+      .text(creditText.x, creditText.y, creditText.text, {
+        ...TextStyles.defaultText(),
+        color: "#ffffff",
+      })
+      .setOrigin(0.5);
+
+    const mask = maskGfx.createGeometryMask();
+    glowText.setMask(mask);
+
+    // הנפשה של המסכה (תנועת אור)
+    maskGfx.x = -maskWidth;
+    maskGfx.y = creditText.y - maskHeight / 2;
+
+    this.tweens.add({
+      targets: maskGfx,
+      x: width + maskWidth,
+      duration: 5000,
+      repeat: -1,
+      ease: "Sine.easeInOut",
+    });
   }
 
   openModal(title, content) {
