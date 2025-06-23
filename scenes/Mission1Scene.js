@@ -1,5 +1,7 @@
 import { TextStyles } from "../config.js";
+import { MISSION_2_BRIEFING, COMMANDER_TITLE } from "../constants.js";
 import { showEndScreen } from "../src/libs/showEndScreen.js";
+import { createPilotVideo } from "../src/libs/pilotVideo.js";
 import {
   shootBullet,
   handlePlayerHit,
@@ -33,6 +35,7 @@ export default class Mission1Scene extends Phaser.Scene {
     this.load.audio("mission1bgm", "assets/sounds/mission1_bgm.mp3");
     this.load.audio("explosion", "assets/sounds/effects/explosion1.mp3");
     this.load.audio("f35explosion", "assets/sounds/effects/f35explosion.mp3");
+    this.load.video("pilot_video", "assets/video/pilot.mp4");
   }
 
   create() {
@@ -60,6 +63,9 @@ export default class Mission1Scene extends Phaser.Scene {
     this.bg2 = this.add
       .tileSprite(0, -height, width, height, "mission1bg")
       .setOrigin(0.5);
+
+    // Create pilot video
+    this.pilotVideo = createPilotVideo(this);
 
     // Create player sprite and set its properties
     this.player = this.physics.add.sprite(width / 2, height * 0.8, "plane");
@@ -116,13 +122,13 @@ export default class Mission1Scene extends Phaser.Scene {
 
     // Display score and lives on screen
     this.scoreText = this.add.text(
-      20,
+      170,
       20,
       "Targets Hit: 0 / 50",
       TextStyles.defaultText()
     );
     this.livesText = this.add.text(
-      20,
+      170,
       50,
       "Lives: 3",
       TextStyles.defaultText()
@@ -134,8 +140,8 @@ export default class Mission1Scene extends Phaser.Scene {
 
   update() {
     // Scroll the background to create movement effect
-    this.bg1.tilePositionY -= 0.3;
-    this.bg2.tilePositionY -= 0.3;
+    this.bg1.tilePositionY -= 2;
+    this.bg2.tilePositionY -= 2;
 
     // Handle player movement (delegated to utility)
     handlePlayerMovement(this, this.cursors, this.player, this.movementBounds);
@@ -148,15 +154,43 @@ export default class Mission1Scene extends Phaser.Scene {
     });
 
     // End mission if enough targets are hit
-    if (this.score >= 50 && !this.gameEnded) {
+    if (this.score >= 1 && !this.gameEnded) {
+      this.mission1bgm.stop();
       this.gameEnded = true;
-      showEndScreen(this, true, "Mission2Scene", "Mission1Scene");
+      showEndScreen(
+        this,
+        true,
+        () => {
+          this.scene.start("BriefingScene", {
+            missionTitle: "Mission 2",
+            briefText: MISSION_2_BRIEFING,
+            audioKey: "mission2_brief",
+            nextScene: "Mission2Scene",
+            commanderTitle: COMMANDER_TITLE,
+          });
+        },
+        "Mission1Scene"
+      );
     }
 
     // End mission if player runs out of lives
     if (this.lives <= 0 && !this.gameEnded) {
+      this.mission1bgm.stop();
       this.gameEnded = true;
-      showEndScreen(this, false, "Mission2Scene", "Mission1Scene");
+      showEndScreen(
+        this,
+        false,
+        () => {
+          this.scene.start("BriefingScene", {
+            missionTitle: "Mission 2",
+            briefText: MISSION_2_BRIEFING,
+            audioKey: "mission2_brief",
+            nextScene: "Mission21Scene",
+            commanderTitle: COMMANDER_TITLE,
+          });
+        },
+        "Mission1Scene"
+      );
     }
   }
 

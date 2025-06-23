@@ -47,6 +47,14 @@ export function showEndScreen(
   });
 
   button.on("pointerdown", () => {
-    scene.scene.start(isWin ? nextScene : retryScene);
+    if (isWin) {
+      if (typeof nextScene === "function") {
+        nextScene();
+      } else {
+        scene.scene.start(nextScene);
+      }
+    } else {
+      scene.scene.start(retryScene);
+    }
   });
 }
