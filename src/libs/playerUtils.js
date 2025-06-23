@@ -81,28 +81,86 @@ export function handlePlayerMovement(
 ) {
   let turning = false;
 
-  const speedX = 800;
-  const speedY = 400;
-  const moveX = (speedX * delta) / 1000;
-  const moveY = (speedY * delta) / 1000;
+  // Different speeds for keyboard vs touch
+  const keyboardSpeedX = 7;
+  const keyboardSpeedY = 5;
+  const touchSpeedX = 700;
+  const touchSpeedY = 300;
+  const touchMoveX = (touchSpeedX * delta) / 1000;
+  const touchMoveY = (touchSpeedY * delta) / 1000;
 
+  // Handle keyboard controls
   if (cursors.left.isDown && player.x > movementBounds.left) {
-    player.x -= moveX;
+    player.x -= keyboardSpeedX;
     player.setAngle(Phaser.Math.Linear(player.angle, -15, 0.2));
     turning = true;
   } else if (cursors.right.isDown && player.x < movementBounds.right) {
-    player.x += moveX;
+    player.x += keyboardSpeedX;
     player.setAngle(Phaser.Math.Linear(player.angle, 15, 0.2));
     turning = true;
   }
 
-  if (!turning) {
-    player.setAngle(Phaser.Math.Linear(player.angle, 0, 0.1));
+  if (cursors.up.isDown && player.y > movementBounds.top) {
+    player.y -= keyboardSpeedY;
+  } else if (cursors.down.isDown && player.y < movementBounds.bottom) {
+    player.y += keyboardSpeedY;
   }
 
-  if (cursors.up.isDown && player.y > movementBounds.top) {
-    player.y -= moveY;
-  } else if (cursors.down.isDown && player.y < movementBounds.bottom) {
-    player.y += moveY;
+  // Handle touch/swipe controls
+  if (!scene.input.touch) {
+    scene.input.addPointer(2); // Enable multi-touch
+
+    // Track swipe
+    scene.input.on("pointerdown", (pointer) => {
+      pointer.dragStartX = pointer.x;
+      pointer.dragStartY = pointer.y;
+    });
+
+    scene.input.on("pointermove", (pointer) => {
+      if (pointer.isDown) {
+        const dragX = pointer.x - pointer.dragStartX;
+        const dragY = pointer.y - pointer.dragStartY;
+
+        // Move horizontally based on swipe
+        if (dragX < 0 && player.x > movementBounds.left) {
+          player.x -= touchMoveX;
+          player.setAngle(Phaser.Math.Linear(player.angle, -15, 0.2));
+          turning = true;
+        } else if (dragX > 0 && player.x < movementBounds.right) {
+          player.x += touchMoveX;
+          player.setAngle(Phaser.Math.Linear(player.angle, 15, 0.2));
+          turning = true;
+        }
+
+        // Move vertically based on swipe
+        if (dragY < 0 && player.y > movementBounds.top) {
+          player.y -= touchMoveY;
+        } else if (dragY > 0 && player.y < movementBounds.bottom) {
+          player.y += touchMoveY;
+        }
+
+        // Update drag start position
+        pointer.dragStartX = pointer.x;
+        pointer.dragStartY = pointer.y;
+      }
+    });
+
+    // Handle double tap to shoot
+    let lastTapTime = 0;
+    scene.input.on("pointerdown", (pointer) => {
+      const currentTime = new Date().getTime();
+      const tapGap = currentTime - lastTapTime;
+
+      if (tapGap < 300) {
+        // Double tap detected
+        scene.input.keyboard.emit("keydown-SPACE");
+      }
+
+      lastTapTime = currentTime;
+    });
+  }
+
+  if (!turning) {
+    player.setAngle(Phaser.Math.Linear(player.angle, 0, 0.1));
   }
 }

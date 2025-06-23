@@ -75,7 +75,8 @@ export default class BriefingScene extends Phaser.Scene {
     );
 
     // Commander Video
-    const video = this.add.video(width * 0.2, height * 0.8, "brief_commander");
+    const videoX = this.sys.game.device.os.desktop ? width * 0.2 : width * 0.25;
+    const video = this.add.video(videoX, height * 0.8, "brief_commander");
     video.setDisplaySize(60, 60);
     video.setDepth(1);
     //video.setPlaybackRate(1.2);
@@ -92,10 +93,17 @@ export default class BriefingScene extends Phaser.Scene {
     video.setMask(mask);
 
     // Commander Title
+    const commanderTitleX = this.sys.game.device.os.desktop
+      ? width * 0.4
+      : width * 0.6;
+    const commanderTitleY = this.sys.game.device.os.desktop
+      ? height * 0.8
+      : height * 0.85;
+
     this.add
       .text(
-        width * 0.4,
-        height * 0.8,
+        commanderTitleX,
+        commanderTitleY,
         this.commanderTitle,
         TextStyles.defaultText()
       )
@@ -104,8 +112,9 @@ export default class BriefingScene extends Phaser.Scene {
       .setDepth(2);
 
     // Start Button
+    const buttonX = this.sys.game.device.os.desktop ? width * 0.7 : width * 0.6;
     const button = this.add
-      .text(width * 0.7, height * 0.8, this.buttonText, TextStyles.button())
+      .text(buttonX, height * 0.8, this.buttonText, TextStyles.button())
       .setOrigin(0.5)
       .setInteractive({ useHandCursor: true });
 

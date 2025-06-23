@@ -33,10 +33,13 @@ Your courage, sacrifice, and unwavering spirit are the heartbeat of our nation's
 `;
 
 export const HOW_TO_PLAY = `
-CONTROLS:
-← →  Move Left / Right  
-↑ ↓  Move Up / Down  
+PC CONTROLS:
+← →  Move Left / Right, ↑ ↓  Move Up / Down  
 SPACE   Fire missiles
+
+MOBILE CONTROLS:
+Swipe left/right to move, Swipe up/down to move
+Double tap to shoot
 
 ENEMIES:
 - Ballistic Missiles: Dodge or shoot them down.
@@ -53,6 +56,8 @@ export const CREDITS = `
 Game by Netanel Mordakhay  
 Software & Information Systems Engineering student, Ben-Gurion University.  
 Passionate about technology, games, and telling a story through code.
+
+Built using **Phaser** - a fast, free and fun open source HTML5 game framework.
 
 Music:
 Generated with **Suno AI**, under a **free license for non-commercial use**.  
