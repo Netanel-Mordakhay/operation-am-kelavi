@@ -20,7 +20,7 @@ export default class Mission5Scene extends Phaser.Scene {
     this.canShoot = true;
     this.missleSpawnTime = 1000;
     // Boss lives
-    this.bossLives = 1;
+    this.bossLives = 25;
     // Boss missile cooldown
     this.bossMissileCooldown = 0;
     // Timer variables (not used in this mission)
@@ -54,7 +54,7 @@ export default class Mission5Scene extends Phaser.Scene {
     this.score = 0;
     this.lives = 3;
     this.gameEnded = false;
-    this.bossLives = 1; // or 10, depending on your design
+    this.bossLives = 25;
     this.bossSpawned = false;
     this.bossDefeated = false;
     this.bossMissileCooldown = 0;
@@ -178,7 +178,7 @@ export default class Mission5Scene extends Phaser.Scene {
     this.scoreText = this.add.text(
       170,
       20,
-      `Boss lives: ${this.bossLives}`,
+      `Ali Khamenei Health: ${this.bossLives}`,
       TextStyles.defaultText()
     );
     // Display player lives on screen
@@ -358,10 +358,10 @@ export default class Mission5Scene extends Phaser.Scene {
   hitTarget(bullet, target) {
     bullet.destroy();
 
-    // If this is the boss and not already defeated
-    if (target.texture.key === "boss" && target.isBoss && !this.bossDefeated) {
+    // Only decrement boss lives and win if the target is boss
+    if (target.texture.key === "boss" && !this.gameEnded) {
       this.bossLives--;
-      this.scoreText.setText(`Boss lives: ${this.bossLives}`);
+      this.scoreText.setText(`Ali Khamenei Health: ${this.bossLives}`);
       this.explosionSound.play();
 
       // Show explosion animation at the boss's position
@@ -380,8 +380,7 @@ export default class Mission5Scene extends Phaser.Scene {
         onComplete: () => explosion.destroy(),
       });
 
-      if (this.bossLives <= 0) {
-        this.bossDefeated = true; // <--- Set flag
+      if (this.bossLives <= 0 && !this.gameEnded) {
         target.destroy(); // Only destroy boss after last hit
         this.boss = null; // Prevent further references
         this.mission5bgm.stop();

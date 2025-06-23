@@ -154,7 +154,7 @@ export default class Mission3Scene extends Phaser.Scene {
     this.scoreText = this.add.text(
       170,
       20,
-      "Targets Hit: 0 / 1",
+      "Targets Hit: 0 / 10",
       TextStyles.defaultText()
     );
     this.livesText = this.add.text(
@@ -223,7 +223,7 @@ export default class Mission3Scene extends Phaser.Scene {
     });
 
     // End mission if enough targets are hit
-    if (this.score >= 1 && !this.gameEnded) {
+    if (this.score >= 10 && !this.gameEnded) {
       this.mission3bgm.stop();
       this.gameEnded = true;
       showEndScreen(
@@ -289,18 +289,18 @@ export default class Mission3Scene extends Phaser.Scene {
     const rand = Phaser.Math.Between(0, 10);
     let texture, height, width, speed;
 
-    if (rand <= 4) {
+    if (rand <= 3) {
       // Most common: missile
       texture = "target";
       height = TARGET_SIZE.height;
       width = TARGET_SIZE.width;
-      speed = 200;
-    } else if (rand <= 8) {
+      speed = 250;
+    } else if (rand <= 6) {
       // Less common: F4 plane
       texture = "f4";
       height = 60;
       width = 60;
-      speed = 160;
+      speed = 200;
     } else {
       // Least common: enemyTruck
       texture = "enemyTruck";

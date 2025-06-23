@@ -135,7 +135,7 @@ export default class Mission4Scene extends Phaser.Scene {
 
     // Spawn fordow only once after 5 seconds
     this.fordowSpawned = false;
-    this.time.delayedCall(5000, this.spawnFordow, [], this);
+    this.time.delayedCall(45000, this.spawnFordow, [], this);
 
     // Handle bullet-target collisions
     this.physics.add.overlap(

@@ -158,7 +158,7 @@ export default class Mission2Scene extends Phaser.Scene {
     this.scoreText = this.add.text(
       170,
       20,
-      "Targets Hit: 0 / 1",
+      "Targets Hit: 0 / 20",
       TextStyles.defaultText()
     );
     this.livesText = this.add.text(
@@ -211,7 +211,7 @@ export default class Mission2Scene extends Phaser.Scene {
     });
 
     // End mission if enough targets are hit
-    if (this.score >= 1 && !this.gameEnded) {
+    if (this.score >= 20 && !this.gameEnded) {
       this.mission2bgm.stop();
       this.gameEnded = true;
       showEndScreen(

@@ -150,7 +150,7 @@ export default class Mission1Scene extends Phaser.Scene {
     this.scoreText = this.add.text(
       170,
       20,
-      "Targets Hit: 0 / 50",
+      "Targets Hit: 0 / 30",
       TextStyles.defaultText()
     );
     this.livesText = this.add.text(
@@ -199,7 +199,7 @@ export default class Mission1Scene extends Phaser.Scene {
     });
 
     // End mission if enough targets are hit
-    if (this.score >= 1 && !this.gameEnded) {
+    if (this.score >= 30 && !this.gameEnded) {
       this.mission1bgm.stop();
       this.gameEnded = true;
       showEndScreen(
@@ -265,7 +265,7 @@ export default class Mission1Scene extends Phaser.Scene {
     // Add score based on target type
     const scoreToAdd = target.texture.key === "target" ? 2 : 1;
     this.score += scoreToAdd;
-    this.scoreText.setText(`Targets Hit: ${this.score} / 50`);
+    this.scoreText.setText(`Targets Hit: ${this.score} / 30`);
     this.explosionSound.play();
 
     // Show explosion animation at the target's position
