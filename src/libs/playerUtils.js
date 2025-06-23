@@ -45,6 +45,7 @@ export function handlePlayerHit(
   player.setPosition(scene.scale.width / 2, scene.scale.height * 0.8);
 }
 
+/*
 // player movement
 export function handlePlayerMovement(scene, cursors, player, movementBounds) {
   let turning = false;
@@ -67,5 +68,41 @@ export function handlePlayerMovement(scene, cursors, player, movementBounds) {
     player.y -= 5;
   } else if (cursors.down.isDown && player.y < movementBounds.bottom) {
     player.y += 5;
+  }
+}
+*/
+
+export function handlePlayerMovement(
+  scene,
+  cursors,
+  player,
+  movementBounds,
+  delta
+) {
+  let turning = false;
+
+  const speedX = 800;
+  const speedY = 400;
+  const moveX = (speedX * delta) / 1000;
+  const moveY = (speedY * delta) / 1000;
+
+  if (cursors.left.isDown && player.x > movementBounds.left) {
+    player.x -= moveX;
+    player.setAngle(Phaser.Math.Linear(player.angle, -15, 0.2));
+    turning = true;
+  } else if (cursors.right.isDown && player.x < movementBounds.right) {
+    player.x += moveX;
+    player.setAngle(Phaser.Math.Linear(player.angle, 15, 0.2));
+    turning = true;
+  }
+
+  if (!turning) {
+    player.setAngle(Phaser.Math.Linear(player.angle, 0, 0.1));
+  }
+
+  if (cursors.up.isDown && player.y > movementBounds.top) {
+    player.y -= moveY;
+  } else if (cursors.down.isDown && player.y < movementBounds.bottom) {
+    player.y += moveY;
   }
 }

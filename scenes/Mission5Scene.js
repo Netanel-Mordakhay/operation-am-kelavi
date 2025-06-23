@@ -27,11 +27,12 @@ export default class Mission5Scene extends Phaser.Scene {
     this.timeLeft = 90;
     this.timerEvent = null;
     this.timerText = null;
+    this.bossDefeated = false;
   }
 
   preload() {
     // Load all assets: images and sounds
-    this.load.image("mission4bg", "assets/sprites/mission4bg.webp");
+    this.load.image("mission5bg", "assets/sprites/mission5bg.webp");
     this.load.image("plane", "assets/sprites/f35.webp");
     this.load.image("bullet", "assets/sprites/f35missile.webp");
     this.load.image("target", "assets/sprites/missile.webp");
@@ -68,10 +69,10 @@ export default class Mission5Scene extends Phaser.Scene {
 
     // Create scrolling background
     this.bg1 = this.add
-      .tileSprite(width / 2, height / 2, width, height, "mission4bg")
+      .tileSprite(width / 2, height / 2, width, height, "mission5bg")
       .setOrigin(0.5);
     this.bg2 = this.add
-      .tileSprite(0, -height, width, height, "mission4bg")
+      .tileSprite(0, -height, width, height, "mission5bg")
       .setOrigin(0.5);
 
     // Create pilot video overlay
@@ -183,7 +184,13 @@ export default class Mission5Scene extends Phaser.Scene {
     this.bg2.tilePositionY -= 2;
 
     // Handle player movement (delegated to utility)
-    handlePlayerMovement(this, this.cursors, this.player, this.movementBounds);
+    handlePlayerMovement(
+      this,
+      this.cursors,
+      this.player,
+      this.movementBounds,
+      delta
+    );
 
     // Remove targets that have moved off the bottom of the screen
     this.targets.children.each((target) => {
@@ -301,14 +308,15 @@ export default class Mission5Scene extends Phaser.Scene {
     this.boss.oscillationSpeed = 0;
     this.boss.oscillationAmplitude = 0;
     this.boss.oscillationPhase = 0;
+    this.boss.isBoss = true;
   }
 
   // Handles when a bullet hits a target
   hitTarget(bullet, target) {
     bullet.destroy();
 
-    // Only decrement boss lives and win if the target is boss
-    if (target.texture.key === "boss" && !this.gameEnded) {
+    // If this is the boss and not already defeated
+    if (target.texture.key === "boss" && target.isBoss && !this.bossDefeated) {
       this.bossLives--;
       this.scoreText.setText(`Boss lives: ${this.bossLives}`);
       this.explosionSound.play();
@@ -329,7 +337,8 @@ export default class Mission5Scene extends Phaser.Scene {
         onComplete: () => explosion.destroy(),
       });
 
-      if (this.bossLives <= 0 && !this.gameEnded) {
+      if (this.bossLives <= 0) {
+        this.bossDefeated = true; // <--- Set flag
         target.destroy(); // Only destroy boss after last hit
         this.boss = null; // Prevent further references
         this.mission5bgm.stop();
@@ -344,6 +353,8 @@ export default class Mission5Scene extends Phaser.Scene {
               audioKey: "mission_success_brief",
               nextScene: "MainMenu",
               commanderTitle: COMMANDER_TITLE,
+              backgroundKey: "win_bg",
+              buttonText: "Return to Main Menu",
             });
           },
           "Mission5Scene"

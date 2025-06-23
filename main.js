@@ -25,26 +25,27 @@ const config = {
       debug: false,
     },
   },
+
+  scene: [
+    mainMenu,
+    BriefingScene,
+    Mission1Scene,
+    Mission2Scene,
+    Mission3Scene,
+    Mission4Scene,
+    Mission5Scene,
+  ],
   /*
   scene: [
-    mainMenu,
-    BriefingScene,
-    Mission1Scene,
-    Mission2Scene,
-    Mission3Scene,
-    Mission4Scene,
     Mission5Scene,
+    Mission4Scene,
+    Mission3Scene,
+    Mission2Scene,
+    Mission1Scene,
+    BriefingScene,
+    mainMenu,
   ],
   */
-  scene: [
-    Mission5Scene,
-    Mission4Scene,
-    Mission3Scene,
-    Mission2Scene,
-    Mission1Scene,
-    BriefingScene,
-    mainMenu,
-  ],
 };
 
 window.onload = () => {

@@ -33,11 +33,40 @@ Your courage, sacrifice, and unwavering spirit are the heartbeat of our nation's
 `;
 
 export const HOW_TO_PLAY = `
-How to play text
+CONTROLS:
+← →  Move Left / Right  
+↑ ↓  Move Up / Down  
+SPACE   Fire missiles
+
+ENEMIES:
+- Ballistic Missiles: Dodge or shoot them down.
+- Enemy Jets (F-4): Fast-moving threats — take them out!
+- Bosses: Powerful foes requiring multiple hits to defeat.
+
+TIPS:
+- Stay on the move to avoid being hit.
+- Bosses may shoot back — time your attacks wisely.
+- Some enemies follow patterns — learn them to survive.
 `;
 
 export const CREDITS = `
-Credits text
+Game by Netanel Mordakhay  
+Software & Information Systems Engineering student, Ben-Gurion University.  
+Passionate about technology, games, and telling a story through code.
+
+Music:
+Generated with **Suno AI**, under a **free license for non-commercial use**.  
+No monetization involved.
+
+Graphics:
+Created with **Midjourney AI**, in retro-inspired 2D pixel art style.  
+Tailored to reflect each mission's atmosphere.
+
+Special Thanks...
+...to **ChatGPT**,  
+who accompanied me every step of the way!
+
+Thank you for playing!
 `;
 
 /* Briefings */

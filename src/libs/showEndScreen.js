@@ -31,7 +31,7 @@ export function showEndScreen(
     .setDepth(101);
 
   // button
-  const buttonText = isWin ? "Next Mission" : "Try Again";
+  const buttonText = isWin ? "Continue" : "Try Again";
   const button = scene.add
     .text(width / 2, height * 0.6, buttonText, TextStyles.button())
     .setOrigin(0.5)

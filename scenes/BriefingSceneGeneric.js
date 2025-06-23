@@ -14,10 +14,18 @@ export default class BriefingScene extends Phaser.Scene {
     this.videoKey = data.videoKey;
     this.nextScene = data.nextScene;
     this.commanderTitle = data.commanderTitle;
+
+    // Optional with fallback
+    this.backgroundKey = data.backgroundKey || "brief_bg";
+    this.buttonText = data.buttonText || "Start Mission";
   }
 
   preload() {
-    this.load.image("background", "assets/sprites/brief_bg.png");
+    if (this.backgroundKey)
+      this.load.image(
+        this.backgroundKey,
+        `assets/sprites/${this.backgroundKey}.webp`
+      );
 
     if (this.audioKey)
       this.load.audio(this.audioKey, `assets/sounds/${this.audioKey}.mp3`);
@@ -30,7 +38,12 @@ export default class BriefingScene extends Phaser.Scene {
 
     // Background
     //this.cameras.main.setBackgroundColor("#000000");
-    const background = this.add.image(width / 2, height / 2, "background");
+    const background = this.add.image(
+      width / 2,
+      height / 2,
+      this.backgroundKey
+    );
+
     background.setOrigin(0.5);
     background.setDisplaySize(width * 1.4, height * 1.4);
     background.setDepth(-1);
@@ -92,7 +105,7 @@ export default class BriefingScene extends Phaser.Scene {
 
     // Start Button
     const button = this.add
-      .text(width * 0.7, height * 0.8, "Start Mission", TextStyles.button())
+      .text(width * 0.7, height * 0.8, this.buttonText, TextStyles.button())
       .setOrigin(0.5)
       .setInteractive({ useHandCursor: true });
 

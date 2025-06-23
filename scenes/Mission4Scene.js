@@ -154,13 +154,19 @@ export default class Mission4Scene extends Phaser.Scene {
     this.cursors = this.input.keyboard.createCursorKeys();
   }
 
-  update() {
+  update(time, delta) {
     // Scroll the background to create movement effect
     this.bg1.tilePositionY -= 2;
     this.bg2.tilePositionY -= 2;
 
     // Handle player movement (delegated to utility)
-    handlePlayerMovement(this, this.cursors, this.player, this.movementBounds);
+    handlePlayerMovement(
+      this,
+      this.cursors,
+      this.player,
+      this.movementBounds,
+      delta
+    );
 
     // Remove targets that have moved off the bottom of the screen
     this.targets.children.each((target) => {
