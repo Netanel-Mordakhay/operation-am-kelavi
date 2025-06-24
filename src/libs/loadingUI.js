@@ -2,7 +2,6 @@
 export function showLoading(scene, text = "Loading...") {
   const { width, height } = scene.scale;
 
-  // טקסט טעינה
   const loadingText = scene.add
     .text(width / 2, height / 2 - 30, text, {
       fontSize: "32px",
@@ -12,7 +11,6 @@ export function showLoading(scene, text = "Loading...") {
     .setOrigin(0.5)
     .setDepth(1001);
 
-  // עיגול טעינה
   const spinner = scene.add.circle(width / 2, height / 2 + 30, 20, 0xffffff);
   spinner.setDepth(1001);
 
