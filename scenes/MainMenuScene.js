@@ -8,6 +8,7 @@ import {
   MISSION_1_BRIEFING,
   COMMANDER_TITLE,
 } from "../constants.js";
+import { showLoading } from "../src/libs/loadingUI.js";
 
 export default class MainMenuScene extends Phaser.Scene {
   constructor() {
@@ -15,9 +16,15 @@ export default class MainMenuScene extends Phaser.Scene {
   }
 
   preload() {
+    this.loadingUI = showLoading(this);
+
     this.load.video("background", "assets/video/menu_bg.mp4");
     this.load.audio("menu_music", "assets/sounds/menu_music.mp3");
     this.load.image("logo", "assets/logo_am_kelavi.png");
+
+    this.load.on("complete", () => {
+      this.loadingUI.destroy();
+    });
   }
 
   create() {

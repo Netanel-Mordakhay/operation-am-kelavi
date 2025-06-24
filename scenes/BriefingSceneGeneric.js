@@ -1,6 +1,7 @@
 // scenes/BriefingScene.js
 import { TextStyles } from "../config.js";
 import { typewriteText } from "../src/libs/typewrite.js";
+import { showLoading } from "../src/libs/loadingUI.js";
 
 export default class BriefingScene extends Phaser.Scene {
   constructor(key = "BriefingScene") {
@@ -21,6 +22,8 @@ export default class BriefingScene extends Phaser.Scene {
   }
 
   preload() {
+    this.loadingUI = showLoading(this);
+
     if (this.backgroundKey)
       this.load.image(
         this.backgroundKey,
@@ -31,6 +34,10 @@ export default class BriefingScene extends Phaser.Scene {
       this.load.audio(this.audioKey, `assets/sounds/${this.audioKey}.mp3`);
 
     this.load.video("brief_commander", `assets/video/brief_commander.mp4`);
+
+    this.load.on("complete", () => {
+      this.loadingUI.destroy();
+    });
   }
 
   create() {

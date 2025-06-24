@@ -1,4 +1,5 @@
 import WebFont from "webfontloader";
+import { showLoading } from "../src/libs/loadingUI.js";
 
 export default class BootScene extends Phaser.Scene {
   constructor() {
@@ -8,13 +9,7 @@ export default class BootScene extends Phaser.Scene {
   preload() {
     this.ready = false;
 
-    this.loadingText = this.add
-      .text(this.scale.width / 2, this.scale.height / 2, "Loading...", {
-        fontSize: "32px",
-        color: "#ffffff",
-        fontFamily: "Arial",
-      })
-      .setOrigin(0.5);
+    this.loadingUI = showLoading(this);
 
     WebFont.load({
       google: {
@@ -28,7 +23,7 @@ export default class BootScene extends Phaser.Scene {
 
   update() {
     if (this.ready) {
-      this.loadingText.destroy();
+      this.loadingUI.destroy();
       this.scene.start("MainMenu");
     }
   }

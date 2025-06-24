@@ -2,6 +2,7 @@ import { TextStyles } from "../config.js";
 import { MISSION_SUCCESS_BRIEFING, COMMANDER_TITLE } from "../constants.js";
 import { showEndScreen } from "../src/libs/showEndScreen.js";
 import { createPilotVideo } from "../src/libs/pilotVideo.js";
+import { showLoading } from "../src/libs/loadingUI.js";
 import {
   shootBullet,
   handlePlayerHit,
@@ -38,6 +39,8 @@ export default class Mission5Scene extends Phaser.Scene {
   }
 
   preload() {
+    this.loadingUI = showLoading(this);
+
     // Load all assets: images and sounds
     this.load.image("mission5bg", "assets/sprites/mission5bg.webp");
     this.load.image("plane", "assets/sprites/f35.webp");
@@ -54,6 +57,10 @@ export default class Mission5Scene extends Phaser.Scene {
     this.load.audio("explosion", "assets/sounds/effects/explosion1.mp3");
     this.load.audio("f35explosion", "assets/sounds/effects/f35explosion.mp3");
     this.load.video("pilot_video", "assets/video/pilot.mp4");
+
+    this.load.on("complete", () => {
+      this.loadingUI.destroy();
+    });
   }
 
   create() {
