@@ -1,5 +1,6 @@
 // main.js
 import Phaser from "phaser";
+import BootScene from "./scenes/BootScene.js";
 import MainMenuScene from "./scenes/MainMenuScene.js";
 import BriefingScene from "./scenes/BriefingSceneGeneric.js";
 import Mission1Scene from "./scenes/Mission1Scene.js";
@@ -27,6 +28,7 @@ const config = {
   },
 
   scene: [
+    BootScene,
     mainMenu,
     BriefingScene,
     Mission1Scene,

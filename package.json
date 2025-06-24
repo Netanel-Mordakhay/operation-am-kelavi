@@ -13,7 +13,8 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "phaser": "^3.90.0"
+    "phaser": "^3.90.0",
+    "webfontloader": "^1.6.28"
   },
   "devDependencies": {
     "vite": "^6.3.5"
