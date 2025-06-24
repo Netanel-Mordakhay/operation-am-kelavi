@@ -198,6 +198,12 @@ export default class Mission4Scene extends Phaser.Scene {
       "Lives: 3",
       TextStyles.defaultText()
     );
+    this.objectivesText = this.add.text(
+      170,
+      80,
+      "Objectives: Survive until Fordow, destroy or avoid enemies.",
+      TextStyles.defaultText()
+    );
 
     // Set up keyboard controls
     this.cursors = this.input.keyboard.createCursorKeys();

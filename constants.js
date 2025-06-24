@@ -35,7 +35,7 @@ Your courage, sacrifice, and unwavering spirit are the heartbeat of our nation's
 export const HOW_TO_PLAY = `
 PC CONTROLS:
 ← →  Move Left / Right, ↑ ↓  Move Up / Down  
-SPACE   Fire missiles
+SPACE  Fire missiles
 
 MOBILE CONTROLS:
 Swipe left/right to move, Swipe up/down to move
@@ -53,23 +53,22 @@ TIPS:
 `;
 
 export const CREDITS = `
-Game by Netanel Mordakhay  
-Software & Information Systems Engineering student, Ben-Gurion University.  
-Passionate about technology, games, and telling a story through code.
+Game by Netanel Mordakhay
+- LinkedIn : linkedin.com/in/netanel-mordakhay
 
 Built using **Phaser** - a fast, free and fun open source HTML5 game framework.
-
-Music:
-Generated with **Suno AI**, under a **free license for non-commercial use**.  
-No monetization involved.
 
 Graphics:
 Created with **Midjourney AI**, in retro-inspired 2D pixel art style.  
 Tailored to reflect each mission's atmosphere.
 
-Special Thanks...
-...to **ChatGPT**,  
-who accompanied me every step of the way!
+Music:
+Generated with **Suno AI**, under a **free license for non-commercial use**.  
+No monetization involved.
+
+Narration:
+Created with **TTSMP3.com**, using AI-generated voiceovers.
+Free license for non-commercial projects.
 
 Thank you for playing!
 `;

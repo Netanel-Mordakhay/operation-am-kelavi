@@ -88,8 +88,8 @@ export function handlePlayerMovement(
   const keyboardMoveX = (keyboardSpeedX * delta) / 1000;
   const keyboardMoveY = (keyboardSpeedY * delta) / 1000;
 
-  const touchSpeedX = 700;
-  const touchSpeedY = 300;
+  const touchSpeedX = 900;
+  const touchSpeedY = 400;
   const touchMoveX = (touchSpeedX * delta) / 1000;
   const touchMoveY = (touchSpeedY * delta) / 1000;
 

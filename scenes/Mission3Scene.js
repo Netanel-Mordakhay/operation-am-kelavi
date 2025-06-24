@@ -195,6 +195,12 @@ export default class Mission3Scene extends Phaser.Scene {
       `Time Left: ${this.timeLeft}s`,
       TextStyles.defaultText()
     );
+    this.objectivesText = this.add.text(
+      170,
+      110,
+      "Objectives: Destroy 10 enemy trucks. Avoid enemies.",
+      TextStyles.defaultText()
+    );
 
     // Start countdown timer event
     this.timerEvent = this.time.addEvent({

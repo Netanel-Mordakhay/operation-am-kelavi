@@ -162,12 +162,16 @@ export default class Mission2Scene extends Phaser.Scene {
       this.player,
       this.targets,
       (player, target) => {
+        if (target.texture.key === "civillianBuilding" && this.isMobile) {
+          // On mobile, ignore hitting civillianBuilding
+          return;
+        }
         if (target.texture.key === "civillianBuilding") {
-          // Lose immediately if hit a civilian building
+          // lose immediately if hit a civillian building (desktop only)
           handlePlayerHit(this, player, target);
           this.lives = 0;
         } else {
-          // Hit enemy building: lose a life
+          // hit enemy building
           handlePlayerHit(this, player, target);
           this.lives--;
           this.livesText.setText("Lives: " + this.lives);
@@ -189,6 +193,18 @@ export default class Mission2Scene extends Phaser.Scene {
       170,
       50,
       "Lives: 3",
+      TextStyles.defaultText()
+    );
+    this.objectivesText = this.add.text(
+      170,
+      80,
+      "Objectives: Destroy 20 enemy buildings.",
+      TextStyles.defaultText()
+    );
+    this.objectivesTextTwo = this.add.text(
+      170,
+      110,
+      "Avoid hitting civilian buildings.",
       TextStyles.defaultText()
     );
 
@@ -291,7 +307,9 @@ export default class Mission2Scene extends Phaser.Scene {
     bullet.destroy();
 
     if (target.texture.key === "civillianBuilding") {
-      this.lives = 0;
+      if (!this.isMobile) {
+        this.lives = 0;
+      }
     } else {
       this.score += 1;
       this.scoreText.setText("Targets Hit: " + this.score + " / 20");

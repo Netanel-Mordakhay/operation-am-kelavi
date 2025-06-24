@@ -212,6 +212,12 @@ export default class Mission5Scene extends Phaser.Scene {
       "Lives: 3",
       TextStyles.defaultText()
     );
+    this.objectivesText = this.add.text(
+      170,
+      80,
+      "Objectives: Defeat the boss. Avoid or destroy enemies.",
+      TextStyles.defaultText()
+    );
 
     // Set up keyboard controls
     this.cursors = this.input.keyboard.createCursorKeys();

@@ -75,8 +75,11 @@ export default class BriefingScene extends Phaser.Scene {
     );
 
     // Commander Video
-    const videoX = this.sys.game.device.os.desktop ? width * 0.2 : width * 0.25;
-    const video = this.add.video(videoX, height * 0.8, "brief_commander");
+    const videoX = this.sys.game.device.os.desktop ? width * 0.2 : width * 0.5;
+    const videoY = this.sys.game.device.os.desktop
+      ? height * 0.8
+      : height * 0.65;
+    const video = this.add.video(videoX, videoY, "brief_commander");
     video.setDisplaySize(60, 60);
     video.setDepth(1);
     //video.setPlaybackRate(1.2);
@@ -95,10 +98,10 @@ export default class BriefingScene extends Phaser.Scene {
     // Commander Title
     const commanderTitleX = this.sys.game.device.os.desktop
       ? width * 0.4
-      : width * 0.6;
+      : width * 0.5;
     const commanderTitleY = this.sys.game.device.os.desktop
       ? height * 0.8
-      : height * 0.85;
+      : height * 0.75;
 
     this.add
       .text(
@@ -112,7 +115,7 @@ export default class BriefingScene extends Phaser.Scene {
       .setDepth(2);
 
     // Start Button
-    const buttonX = this.sys.game.device.os.desktop ? width * 0.7 : width * 0.6;
+    const buttonX = this.sys.game.device.os.desktop ? width * 0.7 : width * 0.5;
     const button = this.add
       .text(buttonX, height * 0.8, this.buttonText, TextStyles.button())
       .setOrigin(0.5)
