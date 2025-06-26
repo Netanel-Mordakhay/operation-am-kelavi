@@ -28,6 +28,14 @@ export default class MainMenuScene extends Phaser.Scene {
   }
 
   create() {
+    this.add
+      .text(0, 0, ".", {
+        fontFamily: "Black Ops One",
+        fontSize: "1px",
+        color: "#000000",
+      })
+      .setAlpha(0);
+
     const { width, height } = this.scale;
 
     // Background Video
@@ -106,6 +114,15 @@ export default class MainMenuScene extends Phaser.Scene {
         }
       });
     });
+
+    this.add
+      .text(
+        width * 0.5,
+        height * 0.5 + 5 * 60,
+        "SOUND ON RECOMMENDED",
+        TextStyles.defaultText()
+      )
+      .setOrigin(0.5);
 
     // Credit text
     const creditText = this.add
