@@ -1,6 +1,6 @@
 # Operation Am Kelavi
 
-**Operation Am Kelavi** is a 2D web-based arcade game inspired by the Israel-Iran war events, built with [Phaser 3](https://phaser.io/). You play as an F-35 pilot flying deep into enemy territory, completing missions, intercepting threats, and defending your nation.
+**Operation Am Kelavi** is a 2D web-based top-down shooter story-driven mission based arcade game inspired by the Israel-Iran war events, built with [Phaser 3](https://phaser.io/). You play as an F-35 pilot flying deep into enemy territory, completing missions, intercepting threats, and defending your nation.
 
 ![video](public/assets/preview/1.gif)
 
